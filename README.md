@@ -1,1 +1,0 @@
-# gdinovska.github.io
