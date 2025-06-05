@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gergana's CDN Demo News Site</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header>
+    <img src="images/header.png" alt="Demo Site Header" class="header-image" />
+    <h1>CDN & Edge Computing News</h1>
+    <nav>
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="article">
+      <h2><a href="https://www.fastly.com/learning/cdn/what-is-a-cdn" target="_blank" rel="noopener">What is a CDN?</a></h2>
+      <p>Content Delivery Networks (CDNs) are systems of distributed servers that deliver web content based on user location, ensuring fast, reliable access worldwide.</p>
+    </section>
+
+    <section class="article">
+      <h2><a href="https://www.fastly.com/learning/cdn/what-is-caching" target="_blank" rel="noopener">Understanding Caching in CDNs</a></h2>
+      <p>Caching stores copies of content closer to users, reducing latency and load on origin servers. Surrogate keys and cache invalidation strategies are essential to keep content fresh.</p>
+    </section>
+
+    <section class="article">
+      <h2><a href="https://www.fastly.com/learning/cdn/how-to-measure-performance-when-using-a-cdn" target="_blank" rel="noopener">Measuring CDN Performance</a></h2>
+      <p>Key metrics like latency, cache hit ratio, and throughput help evaluate CDN effectiveness. Real-time analytics allow engineers to optimize delivery and troubleshoot issues quickly.</p>
+    </section>
+
+    <section class="article">
+      <h2><a href="https://www.fastly.com/learning/cdn/what-is-latency" target="_blank" rel="noopener">What is Latency?</a></h2>
+      <p>Latency is the delay before data transfer begins after a request is made. Lower latency means faster page loads and better user experience.</p>
+    </section>
+
+    <section class="visitor-info">
+      <p>Served via Fastly CDN</p>
+      <p>Your IP: <span id="user-ip">Loading...</span></p>
+      <p id="time-api">Current UTC Time: Loading...</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Gergana's CDN Demo Site</p>
+  </footer>
+
+  <script>
+    // Fetch visitor IP from Fastly header
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch(window.location.href)
+        .then(response => {
+          const visitorIP = response.headers.get("X-Visitor-IP");
+          document.getElementById("user-ip").textContent = visitorIP || "Unavailable";
+        })
+        .catch(() => {
+          document.getElementById("user-ip").textContent = "Error fetching IP";
+        });
+
+      // Fetch UTC time from external API with fallback
+      fetch("https://worldtimeapi.org/api/timezone/Etc/UTC")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("time-api").textContent = "Current UTC Time: " + data.utc_datetime;
+        })
+        .catch(() => {
+          document.getElementById("time-api").textContent = "Current UTC Time: Unable to fetch";
+        });
+    });
+  </script>
+</body>
+</html>
